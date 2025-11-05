@@ -1,0 +1,191 @@
+/* ======================= FUENTE LOCAL ======================= */
+@font-face {
+  font-family: 'NeueMontreal'; /* Nombre de la fuente a usar */
+  src: url('../fonts/NeueMontreal-Bold.otf') format('opentype');/* Ruta y formato del archivo de fuente */
+  font-weight: 700;/* Peso de la fuente: negrita */
+  font-style: normal; /* Estilo de la fuente: normal (sin cursiva) */
+}
+
+/* ======================= ANIMACIONES ======================= */
+.floating {  /* Clase para aplicar la animación "floating" */
+  animation-name: floating; /* Nombre de la animación */
+  animation-duration: 3s; /* Duración total: 3 segundos */
+  animation-iteration-count: infinite;  /* Se repite infinitamente */
+  animation-timing-function: ease-in-out;/* Movimiento suave de entrada y salida */
+} 
+
+@keyframes floating { /* Define los fotogramas de la animación "floating" */
+  0% { transform: translate(0, 0px); } /* Inicio: sin movimiento vertical */
+  50% { transform: translate(0, 8px); } /* Mitad: se mueve hacia abajo 8px */
+  100% { transform: translate(0, -0px); } /* Final: regresa a la posición original */
+}
+
+
+.floating-4 { /* Variante de la animación flotante con duración de 4 segundos */
+  animation-name: floating-4; /* Nombre de la animación */
+  animation-duration: 4s; /* Duración total: 4 segundos */
+  animation-iteration-count: infinite; /* Se repite sin fin */
+  animation-timing-function: ease-in-out; /* Movimiento suave */
+} 
+
+/* Define los fotogramas de la animación "floating-4" */
+@keyframes floating-4 { 
+  0% { transform: translate(0, 0px); } /* Empieza sin movimiento */
+  50% { transform: translate(0, 8px); } /* Baja 8px en la mitad */
+  100% { transform: translate(0, -0px); }   /* Regresa al punto original */
+}
+
+
+
+/* ======================= ESTILOS GENERALES ======================= */
+body {/* Define el estilo general del cuerpo del documento */
+  background-color: #0a0a0f;/* Color de fondo oscuro */
+background-image: url('../images/fondoinicio.png'); /* << cambia el nombre si tu imagen se llama distinto */
+  background-size: cover; /* la imagen cubre toda la pantalla */
+  background-repeat: no-repeat; /* no se repite */
+  background-position: center; /* centrada */
+  color: white;/* Color de texto blanco */
+  font-family: 'NeueMontreal', sans-serif;/* Usa la fuente personalizada o una sans-serif si no está disponible */
+  display: flex;/* Usa flexbox para alinear los elementos */
+  flex-direction: column;/* Coloca los elementos en columna */
+  align-items: center;/* Centra horizontalmente */
+  justify-content: flex-start;/* Alinea los elementos desde arriba */
+  height: 100vh;/* Ocupa el 100% de la altura de la pantalla */
+  margin: 0;/* Elimina márgenes del navegador */
+  padding-top: 80px; /* Deja un espacio arriba */
+  box-sizing: border-box;/* Incluye el padding en el cálculo del tamaño total */
+  -webkit-font-smoothing: antialiased;/* Mejora el renderizado de texto en WebKit */
+  -moz-osx-font-smoothing: grayscale;/* Mejora el renderizado de texto en macOS */
+}
+
+/* ======================= TÍTULO ======================= */
+.titulo {/* Estilo para el texto del título principal */
+  font-size: 60px;/* Tamaño grande de fuente */
+  font-weight: 700;/* Texto en negrita */ 
+  text-align: center; /* Centrado horizontalmente */
+  margin-bottom: 60px;/* Espacio debajo del título */
+  color: #ffffff; /* Color blanco */
+  text-shadow:                   /* Sombras de texto para crear efecto de brillo morado */
+    0 0 8px rgba(115, 0, 255, 0.8),  /* Sombra cercana (desplazamiento x=0,y=0, blur=8px, color morado semitransparente). */
+    0 0 20px rgba(176, 0, 255, 0.6); /* Sombra más difusa (blur mayor) para halo más amplio. */
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.2); /* Trazo fino al texto para aumentar contraste con el halo (soporte webkit). */
+  text-shadow:
+    #2d274b,
+    #2d274b;
+}
+
+/* ======================= FORMULARIO ======================= */
+.inicio_sesion {/* Contenedor del formulario de inicio de sesión */
+  display: flex;/* Activa el modelo flexbox */
+  flex-direction: column;/* Elementos uno debajo del otro */
+  gap: 12px;/* Espacio entre los elementos */
+  background-color: #0f0f13; /* Fondo gris oscuro del formulario */
+  padding: 25px;/* Espacio interno */
+  border-radius: 15px;/* Bordes redondeados */
+  width: 320px;/* Ancho fijo del formulario */
+  max-width: 90%;/* Se adapta en pantallas pequeñas */
+  box-shadow:/* Sombra externa y efecto de brillo */
+    0 4px 12px rgba(0,0,0,0.6),
+    0 0 30px 6px rgba(176,0,255,0.12),
+    inset 0 0 12px rgba(255,255,255,0.02);
+  border: 1px solid rgba(176,0,255,0.12);
+}
+
+/* Labels */
+.inicio_sesion label {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+}
+
+/* Inputs */
+.inicio_sesion input {
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  background-color: rgba(255,255,255,0.04);
+  color: white;
+  outline: none;
+}
+
+.inicio_sesion input:focus {
+  border-color: #2d274b;
+  box-shadow: #2d274b;
+}
+
+
+.registro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #0f0f13;
+  padding: 25px;
+  border-radius: 15px;
+  width: 320px;
+  max-width: 90%;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.6),
+    0 0 30px 6px rgba(176,0,255,0.12),
+    inset 0 0 12px rgba(255,255,255,0.02);
+  border: 1px solid rgba(176,0,255,0.12);
+}
+
+/* Labels */
+.registro label {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+}
+
+/* Inputs */
+.registro input {
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  background-color: rgba(255,255,255,0.04);
+  color: white;
+  outline: none;
+}
+
+.registro input:focus {
+  border-color: #2d274b;
+  box-shadow: #2d274b;
+}
+
+
+/* ======================= BOTONES ======================= */
+button {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.iniciar {
+  background-color: #2d274b;
+  box-shadow: 0 4px 12px rgba(176,0,255,0.16);
+}
+.iniciar:hover {
+  background-color: #2d274b;
+  transform: translateY(-2px);
+}
+
+.registrarse {
+  background-color: transparent;
+  border: 2px solid #2d274b;
+  color: #2d274b;
+  text-decoration: none;         /* Sin subrayado en el texto del enlace. */
+}
+.registrarse:hover {
+  background-color: #2d274b;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ======================= RESPONSIVE ======================= */
+@media (max-width: 420px) {
+  .titulo {
+    font-size: 38px;
+  }
+}
