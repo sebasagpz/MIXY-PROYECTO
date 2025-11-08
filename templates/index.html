@@ -1,22 +1,167 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Inicio de sesión</title>
-  <link rel="stylesheet" href="estilos.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=980, initial-scale=1.0">
+  <title>Login & Registro</title>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  <div class="container" id="main-container">
+    <!-- LOGIN FORM -->
+    <div class="form-section" id="login-section">
+      <h2>Iniciar Sesión</h2>
+      <form id="login-form">
+        <div class="input-box">
+          <input type="email" name="loginCorreo" placeholder="Correo electrónico" required>
+        </div>
+        <div class="input-box">
+          <input type="password" name="loginClave" placeholder="Contraseña" required>
+        </div>
+        <button type="submit">INGRESAR</button>
+      </form>
+      <a href="#">¿Olvidaste tu contraseña?</a>
+    </div>
+    <!-- REGISTRO FORM -->
+    <div class="form-section hidden" id="registro-section">
+      <h2>Registrarse</h2>
+      <form id="registro-form">
+        <div class="input-box">
+          <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+        </div>
+        <div class="input-box">
+          <input type="text" id="apellido" name="apellido" placeholder="Apellido" required>
+        </div>
+        <div class="input-box">
+          <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required>
+        </div>
+        <div class="input-box">
+          <input type="date" id="nacimiento" name="nacimiento" required>
+        </div>
+        <div class="input-box">
+          <input type="password" id="password" name="clave" placeholder="Contraseña" required>
+        </div>
+        <button type="submit">REGISTRARSE</button>
+      </form>
+    </div>
+    <!-- SLIDE PANEL -->
+    <div class="slide-panel" id="slide-panel">
+      <div class="slide-content" id="slide-content">
+        <h3 id="slide-title">¡Bienvenido!</h3>
+        <p id="slide-text">¿Eres nuevo aquí? Regístrate para usar todas las funciones del sitio.</p>
+        <button id="slide-btn">Registrarse</button>
+      </div>
+    </div>
+  </div>
+  <script>
+   // ---- SLIDE ENTRE LOGIN Y REGISTRO ----
+const btnSlide = document.getElementById("slide-btn");
+const slideTitle = document.getElementById("slide-title");
+const slideText = document.getElementById("slide-text");
+const registroSection = document.getElementById("registro-section");
+const loginSection = document.getElementById("login-section");
+const slidePanel = document.getElementById("slide-panel");
+let panelState = "login"; // login / registro
 
-  <h1 class="titulo floating">Bienvenido a mixy</h1>
+btnSlide.addEventListener('click', ()=>{
+  if(panelState==="login"){
+    // Mostrar registro
+    loginSection.classList.add('hidden');
+    registroSection.classList.remove('hidden');
+    slideTitle.textContent = "¡Hola!";
+    slideText.textContent = "¿Ya tienes cuenta? Ingresa tus datos para acceder a todas las funciones.";
+    btnSlide.textContent = "Iniciar Sesión";
+    panelState = "registro";
+    slidePanel.style.background = "linear-gradient(120deg,#3AB397 40%,#53e0c6 100%)";
+  }else{
+    // Mostrar login
+    registroSection.classList.add('hidden');
+    loginSection.classList.remove('hidden');
+    slideTitle.textContent = "¡Bienvenido!";
+    slideText.textContent = "¿Eres nuevo aquí? Regístrate para usar todas las funciones del sitio.";
+    btnSlide.textContent = "Registrarse";
+    panelState = "login";
+    slidePanel.style.background = "linear-gradient(120deg,#3AA8AD 70%,#53e0c6 100%)";
+  }
+});
 
-  <div class="inicio_sesion floating-4">
-    <label for="correo">Ingresa tu correo electrónico</label><!--esta etiqueta crea el ingreso del correro electronico-->
-    <input type="email" id="correo" placeholder="correo@ejemplo.com"><!--Etiqueta en bloque del correo electronico-->
+// ---- REGISTRO AJAX ----
+document.getElementById('registro-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
 
-    <label for="clave">Ingrese contraseña</label> <!-- Etiqueta que muestra el texto para que el usuario ingrese su contraseña -->
-    <input type="password1" id="clave" placeholder="contraseña"><!-- Campo de entrada donde el usuario escribe su contraseña , oculta los caracteres -->
+  const nombre = document.getElementById('nombre').value.trim();
+  const apellido = document.getElementById('apellido').value.trim();
+  const correo = document.getElementById('correo').value.trim();
+  const nacimiento = document.getElementById('nacimiento').value.trim();
+  const password = document.getElementById('password').value.trim();
 
-    <button class="iniciar">Iniciar Sesión</button><!-- Botón que permite al usuario iniciar sesión -->
-    <button class="registrarse"><a href="registro.html">Registrarse</a></button> <!--Boton que permite al usuario registrarse-->
+  const payload = {
+    nombre,
+    apellido,
+    correo,
+    nacimiento,
+    password
+  };
 
+  try {
+    const response = await fetch('/dato/api', { // asegúrate que esta ruta exista en tu backend
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const resultado = await response.json();
+
+    if(response.ok){
+      alert('¡Registro exitoso!\nBienvenido/a, ' + nombre + ' ' + apellido);
+      e.target.reset();
+      // Opcional: cambia automáticamente a login
+      registroSection.classList.add('hidden');
+      loginSection.classList.remove('hidden');
+      slideTitle.textContent = "¡Bienvenido!";
+      slideText.textContent = "¿Eres nuevo aquí? Regístrate para usar todas las funciones del sitio.";
+      btnSlide.textContent = "Registrarse";
+      panelState = "login";
+      slidePanel.style.background = "linear-gradient(120deg,#3AA8AD 70%,#53e0c6 100%)";
+    }else{
+      alert('❌ Error al guardar los datos\n' + (resultado?.mensaje || 'Intenta de nuevo.'));
+    }
+  } catch (err){
+    alert('⚠️ Error de conexión con el servidor');
+  }
+});
+
+// ---- LOGIN AJAX ----
+document.getElementById('login-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+
+  const correo = e.target.loginCorreo.value.trim();
+  const password = e.target.loginClave.value.trim();
+
+  const payload = {
+    correo,
+    password
+  };
+
+  try {
+    const response = await fetch('/api/login', { // asegúrate que esta ruta exista en tu backend
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const resultado = await response.json();
+
+    if(response.ok && resultado?.ok){
+      alert('¡Sesión iniciada para: ' + correo + '!');
+      e.target.reset();
+      // Aquí podrías redirigir a otra página, etc.
+      // window.location.href = "/dashboard";
+    }else{
+      alert('❌ Usuario o contraseña incorrectos');
+    }
+  } catch (err){
+    alert('⚠️ Error de conexión con el servidor');
+  }
+});
+  </script>
 </body>
 </html>
